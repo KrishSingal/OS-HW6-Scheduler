@@ -95,7 +95,62 @@ mainline fallback kernel and your MuQSS kernel
 Indicate you successfully patched, built, and booted into your MuQSS-enabled 
 Linux kernel.
 
-    /* TODO */ 
+We successfully patched, built, and booted into our MuQSS-enabled 
+Linux kernel.
+
+grep output below:
+
+[    0.274684] MuQSS possible/present/online CPUs: 128/4/4
+[    0.274686] MuQSS locality CPU 0 to 0: 0
+[    0.274686] MuQSS locality CPU 0 to 1: 4
+[    0.274686] MuQSS locality CPU 0 to 2: 4
+[    0.274687] MuQSS locality CPU 0 to 3: 4
+[    0.274687] MuQSS locality CPU 1 to 0: 4
+[    0.274687] MuQSS locality CPU 1 to 1: 0
+[    0.274688] MuQSS locality CPU 1 to 2: 4
+[    0.274688] MuQSS locality CPU 1 to 3: 4
+[    0.274688] MuQSS locality CPU 2 to 0: 4
+[    0.274689] MuQSS locality CPU 2 to 1: 4
+[    0.274689] MuQSS locality CPU 2 to 2: 0
+[    0.274689] MuQSS locality CPU 2 to 3: 4
+[    0.274690] MuQSS locality CPU 3 to 0: 4
+[    0.274690] MuQSS locality CPU 3 to 1: 4
+[    0.274690] MuQSS locality CPU 3 to 2: 4
+[    0.274691] MuQSS locality CPU 3 to 3: 0
+[    0.274775] MuQSS CPU 0 llc 0 RQ order 0 RQ 0 llc 0
+[    0.274775] MuQSS CPU 0 llc 0 RQ order 1 RQ 1 llc 2
+[    0.274776] MuQSS CPU 0 llc 0 RQ order 2 RQ 2 llc 4
+[    0.274776] MuQSS CPU 0 llc 0 RQ order 3 RQ 3 llc 6
+[    0.274777] MuQSS CPU 1 llc 2 RQ order 0 RQ 1 llc 2
+[    0.274777] MuQSS CPU 1 llc 2 RQ order 1 RQ 2 llc 4
+[    0.274777] MuQSS CPU 1 llc 2 RQ order 2 RQ 3 llc 6
+[    0.274778] MuQSS CPU 1 llc 2 RQ order 3 RQ 0 llc 0
+[    0.274778] MuQSS CPU 2 llc 4 RQ order 0 RQ 2 llc 4
+[    0.274779] MuQSS CPU 2 llc 4 RQ order 1 RQ 1 llc 2
+[    0.274779] MuQSS CPU 2 llc 4 RQ order 2 RQ 0 llc 0
+[    0.274779] MuQSS CPU 2 llc 4 RQ order 3 RQ 3 llc 6
+[    0.274780] MuQSS CPU 3 llc 6 RQ order 0 RQ 3 llc 6
+[    0.274780] MuQSS CPU 3 llc 6 RQ order 1 RQ 2 llc 4
+[    0.274781] MuQSS CPU 3 llc 6 RQ order 2 RQ 1 llc 2
+[    0.274781] MuQSS CPU 3 llc 6 RQ order 3 RQ 0 llc 0
+[    0.274782] MuQSS CPU 0 llc 0 CPU order 0 RQ 0 llc 0
+[    0.274782] MuQSS CPU 0 llc 0 CPU order 1 RQ 1 llc 2
+[    0.274782] MuQSS CPU 0 llc 0 CPU order 2 RQ 2 llc 4
+[    0.274783] MuQSS CPU 0 llc 0 CPU order 3 RQ 3 llc 6
+[    0.274783] MuQSS CPU 1 llc 2 CPU order 0 RQ 1 llc 2
+[    0.274784] MuQSS CPU 1 llc 2 CPU order 1 RQ 2 llc 4
+[    0.274784] MuQSS CPU 1 llc 2 CPU order 2 RQ 3 llc 6
+[    0.274784] MuQSS CPU 1 llc 2 CPU order 3 RQ 0 llc 0
+[    0.274785] MuQSS CPU 2 llc 4 CPU order 0 RQ 2 llc 4
+[    0.274785] MuQSS CPU 2 llc 4 CPU order 1 RQ 1 llc 2
+[    0.274786] MuQSS CPU 2 llc 4 CPU order 2 RQ 0 llc 0
+[    0.274786] MuQSS CPU 2 llc 4 CPU order 3 RQ 3 llc 6
+[    0.274786] MuQSS CPU 3 llc 6 CPU order 0 RQ 3 llc 6
+[    0.274787] MuQSS CPU 3 llc 6 CPU order 1 RQ 2 llc 4
+[    0.274787] MuQSS CPU 3 llc 6 CPU order 2 RQ 1 llc 2
+[    0.274788] MuQSS CPU 3 llc 6 CPU order 3 RQ 0 llc 0
+[    0.274788] MuQSS runqueue share type MC total runqueues: 4
+[    1.725165] MuQSS CPU scheduler v0.205 by Con Kolivas.
 
 =================================== P2Q2 end ===================================
 
