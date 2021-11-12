@@ -13,11 +13,12 @@ Describe how you created the 70%/30% split.
 
 	Command lines used:
 	sudo nice --adjustment=-10 ./run &
+	sudo nice --adjustment=-6 ./run &
 	sudo taskset -p --cpu-list 3 <PID>
 	top -1
 
 	Root privileges required for nice and taskset commands.
-	run.c is a program with an infinite while loop that increments and decrements an integer each iteration. These commands were run in ~/cs4118/hw6-16-Kernel_Panic_0x21_At_The_Distro/part1
+	run.c is a program with an infinite while loop that increments and decrements an integer each iteration. These commands were run in ~/cs4118/hw6-16-Kernel_Panic_0x21_At_The_Distro/part1. We ran "sudo nice --adjustment=-10 ./run &" from the terminal 5 times and "sudo nice --adjustment=-6 ./run &" five times.
 
     Top output We ran the command "top -1"
 	top - 17:22:32 up 45 min,  2 users,  load average: 9.31, 5.08, 2.35
@@ -37,51 +38,7 @@ MiB Swap:    975.0 total,    975.0 free,      0.0 used.   6774.8 avail Mem
    7254 root      14  -6    2172    504    436 R   6.0   0.0   0:14.20 run                         
    7292 root      14  -6    2172    500    436 R   6.0   0.0   0:11.06 run                         
    7410 root      14  -6    2172    564    500 R   6.0   0.0   0:11.64 run                         
-   7321 root      14  -6    2172    564    500 R   5.6   0.0   0:18.95 run                         
-   
-   
-   
-   
-   
-   //TODO: marked for deletion
-   1033 user      20   0 1059484 210460  34272 S   1.7   2.6   0:57.05 node                        
-   1013 user      20   0  675788  43456  29664 S   0.3   0.5   0:03.05 node                        
-      1 root      20   0  163908  10156   7716 S   0.0   0.1   0:01.61 systemd                     
-      2 root      20   0       0      0      0 S   0.0   0.0   0:00.00 kthreadd                    
-      3 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 rcu_gp                      
-      4 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 rcu_par_gp                  
-      6 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker/0:0H-events_highpri 
-      9 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 mm_percpu_wq                
-     10 root      20   0       0      0      0 S   0.0   0.0   0:00.00 rcu_tasks_rude_             
-     11 root      20   0       0      0      0 S   0.0   0.0   0:00.00 rcu_tasks_trace             
-     12 root      20   0       0      0      0 S   0.0   0.0   0:01.11 ksoftirqd/0                 
-     13 root      20   0       0      0      0 I   0.0   0.0   0:00.79 rcu_sched                   
-     14 root      rt   0       0      0      0 S   0.0   0.0   0:00.02 migration/0                 
-     15 root      20   0       0      0      0 S   0.0   0.0   0:00.00 cpuhp/0                     
-     16 root      20   0       0      0      0 S   0.0   0.0   0:00.00 cpuhp/1                     
-     17 root      rt   0       0      0      0 S   0.0   0.0   0:00.28 migration/1                 
-     18 root      20   0       0      0      0 S   0.0   0.0   0:00.04 ksoftirqd/1                 
-     20 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker/1:0H-events_highpri 
-     21 root      20   0       0      0      0 S   0.0   0.0   0:00.00 cpuhp/2                     
-     22 root      rt   0       0      0      0 S   0.0   0.0   0:00.28 migration/2                 
-     23 root      20   0       0      0      0 S   0.0   0.0   0:00.03 ksoftirqd/2                 
-     25 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker/2:0H-events_highpri 
-     26 root      20   0       0      0      0 S   0.0   0.0   0:00.00 cpuhp/3                     
-     27 root      rt   0       0      0      0 S   0.0   0.0   0:00.28 migration/3                 
-     28 root      20   0       0      0      0 S   0.0   0.0   0:00.03 ksoftirqd/3                 
-     30 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker/3:0H-events_highpri 
-     35 root      20   0       0      0      0 S   0.0   0.0   0:00.00 kdevtmpfs                   
-     36 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 netns                       
-     37 root      20   0       0      0      0 S   0.0   0.0   0:00.00 kauditd                     
-     39 root      20   0       0      0      0 S   0.0   0.0   0:00.00 khungtaskd                  
-     40 root      20   0       0      0      0 S   0.0   0.0   0:00.00 oom_reaper                  
-     41 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 writeback                   
-     42 root      20   0       0      0      0 S   0.0   0.0   0:00.12 kcompactd0                  
-     43 root      25   5       0      0      0 S   0.0   0.0   0:00.00 ksmd                        
-     44 root      39  19       0      0      0 S   0.0   0.0   0:00.77 khugepaged                  
-     62 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kintegrityd                 
-     63 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kblockd     
-
+   7321 root      14  -6    2172    564    500 R   5.6   0.0   0:18.95 run 
 =================================== P1Q1 end ===================================
 
 ================================== P1Q2 start ==================================
@@ -90,8 +47,36 @@ Describe how you created a real-time priority task.
     - Indicate if you needed root privileges for any of those commands
     - Include the top output
 
-    /* TODO */ 
+	Command lines used:
+	sudo nice --adjustment=-10 ./run &
+	sudo nice --adjustment=-6 ./run &
+	sudo nice --adjustment=0 ./run &
+	sudo taskset -p --cpu-list 3 <PID>
+	sudo chrt -p 99 <PID>
+	top -1
 
+	Root privileges required for nice, taskset, and chrt commands.
+	run.c is a program with an infinite while loop that increments and decrements an integer each iteration. These commands were run in ~/cs4118/hw6-16-Kernel_Panic_0x21_At_The_Distro/part1. We ran "sudo nice --adjustment=-10 ./run &" from the terminal 5 times and "sudo nice --adjustment=-6 ./run &" five times. "sudo nice --adjustment=0 ./run &" was run just once and then we elevated that process to real time with command "sudo chrt -p 99 <PID>".
+
+    top - 22:43:34 up 14 min,  2 users,  load average: 11.33, 7.73, 3.59
+Tasks: 187 total,  12 running, 175 sleeping,   0 stopped,   0 zombie
+%Cpu0  :   0.0/0.0     0[                                      ]     %Cpu1  :   0.0/0.0     0[                                      ]
+%Cpu2  :   0.0/0.0     0[                                      ]     %Cpu3  : 100.0/0.0   100[||||||||||||||||||||||||||||||||||||||]
+MiB Mem :   7928.4 total,   7232.5 free,    271.4 used,    424.6 buff/cache
+MiB Swap:    975.0 total,    975.0 free,      0.0 used.   7415.4 avail Mem 
+
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                                        
+    960 root      rt   0    2172    568    504 R  95.7   0.0   0:39.15 run                                                            
+    891 root      10 -10    2172    552    492 R   0.7   0.0   2:55.14 run                                                            
+    893 root      10 -10    2172    568    504 R   0.7   0.0   2:49.91 run                                                            
+    895 root      10 -10    2172    564    504 R   0.7   0.0   2:42.20 run                                                            
+    897 root      10 -10    2172    564    504 R   0.7   0.0   2:47.02 run                                                            
+    899 root      10 -10    2172    500    436 R   0.7   0.0   2:13.47 run                                                            
+    912 root      14  -6    2172    504    440 R   0.3   0.0   0:32.88 run                                                            
+    914 root      14  -6    2172    556    492 R   0.3   0.0   0:32.40 run                                                            
+    916 root      14  -6    2172    504    436 R   0.3   0.0   0:32.87 run                                                            
+    918 root      14  -6    2172    568    504 R   0.3   0.0   0:31.98 run                                                            
+    920 root      14  -6    2172    504    440 R   0.3   0.0   0:32.39 run
 =================================== P1Q2 end ===================================
 
 
@@ -100,7 +85,9 @@ Describe how you created a real-time priority task.
 The output of diff or diffconfig when comparing the config files for your 
 mainline fallback kernel and your MuQSS kernel
 
-    /* TODO */
+    scripts/diffconfig .config.old .config-nm3077-muqss
+ LOCALVERSION "-cs4118" -> "-nm3077-muqss"
+
 
 =================================== P2Q1 end ===================================
 
