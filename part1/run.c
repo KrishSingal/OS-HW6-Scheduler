@@ -1,7 +1,9 @@
-int main() {
-    int i = 1;
-    while(1){
-        i++;
-        i--;
-    }
+int main(void)
+{
+	int i = 1;
+
+	while (1) {
+		i++;
+		i--;
+	}
 }

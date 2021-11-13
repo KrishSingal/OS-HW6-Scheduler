@@ -6,7 +6,7 @@ need to worry if the top command is longer than 80 chars). Also, please limit
 your answers to about 40 words.
 
 ================================== P1Q1 start ==================================
-Describe how you created the 70%/30% split. 
+Describe how you created the 70%/30% split.
     - Include the command lines you executed
     - Indicate if you needed root privileges for any of those commands
     - Include the top output
@@ -23,22 +23,24 @@ Describe how you created the 70%/30% split.
     Top output We ran the command "top -1"
 	top - 17:22:32 up 45 min,  2 users,  load average: 9.31, 5.08, 2.35
 Tasks: 200 total,  11 running, 189 sleeping,   0 stopped,   0 zombie
-%Cpu0  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st     %Cpu1  :  1.0 u
-%Cpu2  :  0.7 us,  0.3 sy,  0.0 ni, 99.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st     %Cpu3  :100.0 u
+%Cpu0  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu1  :  1.0 u
+%Cpu2  :  0.7 us,  0.3 sy,  0.0 ni, 99.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu3  :100.0 u
 MiB Mem :   7928.4 total,   2828.3 free,    851.8 used,   4248.3 buff/cache
-MiB Swap:    975.0 total,    975.0 free,      0.0 used.   6774.8 avail Mem 
+MiB Swap:    975.0 total,    975.0 free,      0.0 used.   6774.8 avail Mem
 
-    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                     
-   5466 root      10 -10    2172    500    440 R  14.3   0.0   7:09.73 run                         
-   6659 root      10 -10    2172    568    504 R  14.3   0.0   1:16.08 run                         
-   6918 root      10 -10    2172    504    440 R  14.3   0.0   0:53.64 run                         
-   6362 root      10 -10    2172    560    496 R  14.0   0.0   2:29.26 run                         
-   6812 root      10 -10    2172    504    440 R  14.0   0.0   0:53.76 run                         
-   7164 root      14  -6    2172    504    440 R   6.0   0.0   0:22.78 run                         
-   7254 root      14  -6    2172    504    436 R   6.0   0.0   0:14.20 run                         
-   7292 root      14  -6    2172    500    436 R   6.0   0.0   0:11.06 run                         
-   7410 root      14  -6    2172    564    500 R   6.0   0.0   0:11.64 run                         
-   7321 root      14  -6    2172    564    500 R   5.6   0.0   0:18.95 run 
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+   5466 root      10 -10    2172    500    440 R  14.3   0.0   7:09.73 run
+   6659 root      10 -10    2172    568    504 R  14.3   0.0   1:16.08 run
+   6918 root      10 -10    2172    504    440 R  14.3   0.0   0:53.64 run
+   6362 root      10 -10    2172    560    496 R  14.0   0.0   2:29.26 run
+   6812 root      10 -10    2172    504    440 R  14.0   0.0   0:53.76 run
+   7164 root      14  -6    2172    504    440 R   6.0   0.0   0:22.78 run
+   7254 root      14  -6    2172    504    436 R   6.0   0.0   0:14.20 run
+   7292 root      14  -6    2172    500    436 R   6.0   0.0   0:11.06 run
+   7410 root      14  -6    2172    564    500 R   6.0   0.0   0:11.64 run
+   7321 root      14  -6    2172    564    500 R   5.6   0.0   0:18.95 run
 =================================== P1Q1 end ===================================
 
 ================================== P1Q2 start ==================================
@@ -60,22 +62,24 @@ Describe how you created a real-time priority task.
 
     top - 22:43:34 up 14 min,  2 users,  load average: 11.33, 7.73, 3.59
 Tasks: 187 total,  12 running, 175 sleeping,   0 stopped,   0 zombie
-%Cpu0  :   0.0/0.0     0[                                      ]     %Cpu1  :   0.0/0.0     0[                                      ]
-%Cpu2  :   0.0/0.0     0[                                      ]     %Cpu3  : 100.0/0.0   100[||||||||||||||||||||||||||||||||||||||]
+%Cpu0  :   0.0/0.0     0[                                      ]
+%Cpu1  :   0.0/0.0     0[                                      ]
+%Cpu2  :   0.0/0.0     0[                                      ]
+%Cpu3  : 100.0/0.0   100[||||||||||||||||||||||||||||||||||||||]
 MiB Mem :   7928.4 total,   7232.5 free,    271.4 used,    424.6 buff/cache
-MiB Swap:    975.0 total,    975.0 free,      0.0 used.   7415.4 avail Mem 
+MiB Swap:    975.0 total,    975.0 free,      0.0 used.   7415.4 avail Mem
 
-    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                                        
-    960 root      rt   0    2172    568    504 R  95.7   0.0   0:39.15 run                                                            
-    891 root      10 -10    2172    552    492 R   0.7   0.0   2:55.14 run                                                            
-    893 root      10 -10    2172    568    504 R   0.7   0.0   2:49.91 run                                                            
-    895 root      10 -10    2172    564    504 R   0.7   0.0   2:42.20 run                                                            
-    897 root      10 -10    2172    564    504 R   0.7   0.0   2:47.02 run                                                            
-    899 root      10 -10    2172    500    436 R   0.7   0.0   2:13.47 run                                                            
-    912 root      14  -6    2172    504    440 R   0.3   0.0   0:32.88 run                                                            
-    914 root      14  -6    2172    556    492 R   0.3   0.0   0:32.40 run                                                            
-    916 root      14  -6    2172    504    436 R   0.3   0.0   0:32.87 run                                                            
-    918 root      14  -6    2172    568    504 R   0.3   0.0   0:31.98 run                                                            
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+    960 root      rt   0    2172    568    504 R  95.7   0.0   0:39.15 run
+    891 root      10 -10    2172    552    492 R   0.7   0.0   2:55.14 run
+    893 root      10 -10    2172    568    504 R   0.7   0.0   2:49.91 run
+    895 root      10 -10    2172    564    504 R   0.7   0.0   2:42.20 run
+    897 root      10 -10    2172    564    504 R   0.7   0.0   2:47.02 run
+    899 root      10 -10    2172    500    436 R   0.7   0.0   2:13.47 run
+    912 root      14  -6    2172    504    440 R   0.3   0.0   0:32.88 run
+    914 root      14  -6    2172    556    492 R   0.3   0.0   0:32.40 run
+    916 root      14  -6    2172    504    436 R   0.3   0.0   0:32.87 run
+    918 root      14  -6    2172    568    504 R   0.3   0.0   0:31.98 run
     920 root      14  -6    2172    504    440 R   0.3   0.0   0:32.39 run
 =================================== P1Q2 end ===================================
 
@@ -111,7 +115,7 @@ mainline fallback kernel and your MuQSS kernel
 Indicate you successfully patched, built, and booted into your MuQSS-enabled 
 Linux kernel.
 
-We successfully patched, built, and booted into our MuQSS-enabled 
+We successfully patched, built, and booted into our MuQSS-enabled
 Linux kernel.
 
 grep output below:
@@ -188,7 +192,7 @@ Describe how you created a real-time priority task.
     - Indicate if you needed root privileges for any of those commands
     - How were the results different from P1Q2, if at all.
 
-    /* TODO */ 
+    /* TODO */
 
 =================================== P3Q2 end ===================================
 
@@ -206,7 +210,7 @@ without root privileges, and describe the differences.
 Verify Con Kolivas' claim by timing the kernel build-time in both your fallback
 and your MuQSS-patched kernels.
     
-    /* TODO */ 
+    /* TODO */
 
 =================================== P4Q1 end ===================================
 
@@ -214,7 +218,7 @@ and your MuQSS-patched kernels.
 Design an experiment that you think will highlight MuQSS’s strength. Perform 
 the experiment and report your findings.
 
-    /* TODO */ 
+    /* TODO */
 
 =================================== P4Q2 end ===================================
 
@@ -223,21 +227,21 @@ the experiment and report your findings.
 ================================== P5Q1 start ==================================
 Briefly describe the advantages and disadvantages of a larger HZ.
 
-    /* TODO */ 
+    /* TODO */
 
 =================================== P5Q1 end ===================================
 
 ================================== P5Q2 start ==================================
 What is the HZ currently configured for your running Linux system?
 
-    /* TODO */ 
+    /* TODO */
 
 =================================== P5Q2 end ===================================
 
 ================================== P5Q3 start ==================================
 What are jiffies? Explain the relationship between jiffies, HZ, and time.
 
-    /* TODO */ 
+    /* TODO */
 
 =================================== P5Q3 end ===================================
 
@@ -250,13 +254,13 @@ Find the current value of jiffies in your system.
     - Why does this large difference exist? (Hint: in 32-bit Linux systems,
       jiffies is a 32-bit value.)
 
-    /* TODO */ 
+    /* TODO */
 
 =================================== P5Q4 end ===================================
 
 ================================== P5Q5 start ==================================
 What are Niffies? How do they differ from Jiffies?
 
-    /* TODO */ 
+    /* TODO */
 
 =================================== P5Q5 end ===================================
