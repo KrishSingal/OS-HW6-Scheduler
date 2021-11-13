@@ -17,7 +17,7 @@ Describe how you created the 70%/30% split.
 	sudo taskset -p --cpu-list 3 <PID>
 	top -1
 
-	Root privileges required for nice and taskset commands.
+	Root privileges required for nice and taskset commands
 	run.c is a program with an infinite while loop that increments and decrements an integer each iteration. These commands were run in ~/cs4118/hw6-16-Kernel_Panic_0x21_At_The_Distro/part1. We ran "sudo nice --adjustment=-10 ./run &" from the terminal 5 times and "sudo nice --adjustment=-6 ./run &" five times.
 
     Top output We ran the command "top -1"
@@ -85,8 +85,24 @@ MiB Swap:    975.0 total,    975.0 free,      0.0 used.   7415.4 avail Mem
 The output of diff or diffconfig when comparing the config files for your 
 mainline fallback kernel and your MuQSS kernel
 
-    scripts/diffconfig .config.old .config-nm3077-muqss
- LOCALVERSION "-cs4118" -> "-nm3077-muqss"
+    scripts/diffconfig .config /boot/config-5.10.57-cs4118
+-RQ_ALL n
+-RQ_MC y
+-RQ_MC_LLC n
+-RQ_NONE n
+-RQ_SMP n
+-RQ_SMT n
+-SCHED_MUQSS y
+-SHARERQ 2
+-SMT_NICE y
+ LOCALVERSION "-nm3077-muqss" -> "-cs4118"
++CFS_BANDWIDTH y
++CGROUP_CPUACCT y
++FAIR_GROUP_SCHED y
++NUMA_BALANCING y
++NUMA_BALANCING_DEFAULT_ENABLED y
++RT_GROUP_SCHED n
++SCHED_AUTOGROUP y
 
 
 =================================== P2Q1 end ===================================
