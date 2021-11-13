@@ -177,22 +177,44 @@ grep output below:
 
 
 ================================== P3Q1 start ==================================
-Describe how you created the 70%/30% split. 
+Describe how you created the 70%/30% split.
     - Include the command lines you executed
     - Indicate if you needed root privileges for any of those commands
     - How were the results different from P1Q1, if at all.
 
-    /* TODO */
+    Command lines used:
+	sudo nice --adjustment=-10 ./run &
+	sudo nice --adjustment=-6 ./run &
+	sudo taskset -p --cpu-list 3 <PID>
+	top -1
+
+	We needed root privileges to run nice and taskset commands.
+
+	this did not create a 70/30 split. Instead we found that 5 processes took up about 12% each which means they took up around 60% in total. The other 5 processes took up about 10% each so they took up around 50% in total.
+	This is curious as the total percentage of CPU usage across the single processor adds up to 110%. Notably the processes with nice value -6 and those with nice value -10 are more similar in their CPU usage percentage than in the previous kernel.
 
 =================================== P3Q1 end ===================================
 
 ================================== P3Q2 start ==================================
-Describe how you created a real-time priority task. 
+Describe how you created a real-time priority task.
     - Include the command lines you executed
     - Indicate if you needed root privileges for any of those commands
     - How were the results different from P1Q2, if at all.
 
-    /* TODO */
+    Command lines used:
+	sudo nice --adjustment=-10 ./run &
+	sudo nice --adjustment=-6 ./run &
+	sudo nice --adjustment=0 ./run &
+	sudo taskset -p --cpu-list 3 <PID>
+	sudo chrt -p 99 <PID>
+	top -1
+
+	We needed root privileges to run nice, taskset, and chrt commands.
+
+	run.c is a program with an infinite while loop that increments and decrements an integer each iteration. These commands were run in ~/cs4118/hw6-16-Kernel_Panic_0x21_At_The_Distro/part1. We ran "sudo nice --adjustment=-10 ./run &" from the terminal 5 times and "sudo nice --adjustment=-6 ./run &" five times. "sudo nice --adjustment=0 ./run &" was run just once and then we elevated that process to real time with command "sudo chrt -p 99 <PID>".
+
+	We found that the process with realtime priority took up 100% of the cpu usage and the other processes took up 0% of the cpu usage.
+
 
 =================================== P3Q2 end ===================================
 
@@ -200,7 +222,24 @@ Describe how you created a real-time priority task.
 MuQSS features unprivileged real-time tasks. Perform the previous task with and
 without root privileges, and describe the differences. 
 
-    /* TODO */
+	Command lines used:
+	sudo nice --adjustment=-10 ./run &
+	sudo nice --adjustment=-6 ./run &
+	sudo taskset -p --cpu-list 3 <PID>
+	sudo chrt -p 99 <PID>
+	top -1
+
+	./run &
+	schedtool -a 0x8 <PID>
+	schedtool -I -e <PID>
+
+	We needed root privileges to run nice, taskset, and chrt commands. We followed the steps for part 2 except we made changes for running the unpriviliged realtime process.
+
+    We used the schedtools command to set the cpu affinity for unpirivileged process. We used "schedtool -a 0x8 <PID>" to set it to CPU3 and then "schedtool -I -e <PID>" to change its scheudling policy to SHCED_ISO which designates it as unprivileged realtime.
+
+	We see that the CPU usage of the unprivileged realtime process averages at around 70% which is expected. It varies from 60% to 85%. The other processes take up anywhere between 2% and 5% each.
+
+	In comparison, as noted in the previous part, when we had a priviliged realtime task, we saw that it took up %100 of the CPU. (as noted in part3 Q2)
 
 =================================== P3Q3 end ===================================
 
