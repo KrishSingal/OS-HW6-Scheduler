@@ -6,7 +6,7 @@ need to worry if the top command is longer than 80 chars). Also, please limit
 your answers to about 40 words.
 
 ================================== P1Q1 start ==================================
-Describe how you created the 70%/30% split. 
+Describe how you created the 70%/30% split.
     - Include the command lines you executed
     - Indicate if you needed root privileges for any of those commands
     - Include the top output
@@ -17,29 +17,30 @@ Describe how you created the 70%/30% split.
 	sudo taskset -p --cpu-list 3 <PID>
 	top -1
 
-	Root privileges required for nice and taskset commands.
+	Root privileges required for nice and taskset commands
 	run.c is a program with an infinite while loop that increments and decrements an integer each iteration. These commands were run in ~/cs4118/hw6-16-Kernel_Panic_0x21_At_The_Distro/part1. We ran "sudo nice --adjustment=-10 ./run &" from the terminal 5 times and "sudo nice --adjustment=-6 ./run &" five times.
 
     Top output We ran the command "top -1"
 	top - 17:22:32 up 45 min,  2 users,  load average: 9.31, 5.08, 2.35
 Tasks: 200 total,  11 running, 189 sleeping,   0 stopped,   0 zombie
-%Cpu0  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st     %Cpu1  :  1.0 u
-%Cpu2  :  0.7 us,  0.3 sy,  0.0 ni, 99.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st     %Cpu3  :100.0 u
+%Cpu0  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu1  :  1.0 u
+%Cpu2  :  0.7 us,  0.3 sy,  0.0 ni, 99.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu3  :100.0 u
 MiB Mem :   7928.4 total,   2828.3 free,    851.8 used,   4248.3 buff/cache
-MiB Swap:    975.0 total,    975.0 free,      0.0 used.   6774.8 avail Mem 
+MiB Swap:    975.0 total,    975.0 free,      0.0 used.   6774.8 avail Mem
 
-    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                     
-   5466 root      10 -10    2172    500    440 R  14.3   0.0   7:09.73 run                         
-   6659 root      10 -10    2172    568    504 R  14.3   0.0   1:16.08 run                         
-   6918 root      10 -10    2172    504    440 R  14.3   0.0   0:53.64 run                         
-   6362 root      10 -10    2172    560    496 R  14.0   0.0   2:29.26 run                         
-   6812 root      10 -10    2172    504    440 R  14.0   0.0   0:53.76 run                         
-   7164 root      14  -6    2172    504    440 R   6.0   0.0   0:22.78 run                         
-   7254 root      14  -6    2172    504    436 R   6.0   0.0   0:14.20 run                         
-   7292 root      14  -6    2172    500    436 R   6.0   0.0   0:11.06 run                         
-   7410 root      14  -6    2172    564    500 R   6.0   0.0   0:11.64 run                         
-   7321 root      14  -6    2172    564    500 R   5.6   0.0   0:18.95 run                         
-
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+   5466 root      10 -10    2172    500    440 R  14.3   0.0   7:09.73 run
+   6659 root      10 -10    2172    568    504 R  14.3   0.0   1:16.08 run
+   6918 root      10 -10    2172    504    440 R  14.3   0.0   0:53.64 run
+   6362 root      10 -10    2172    560    496 R  14.0   0.0   2:29.26 run
+   6812 root      10 -10    2172    504    440 R  14.0   0.0   0:53.76 run
+   7164 root      14  -6    2172    504    440 R   6.0   0.0   0:22.78 run
+   7254 root      14  -6    2172    504    436 R   6.0   0.0   0:14.20 run
+   7292 root      14  -6    2172    500    436 R   6.0   0.0   0:11.06 run
+   7410 root      14  -6    2172    564    500 R   6.0   0.0   0:11.64 run
+   7321 root      14  -6    2172    564    500 R   5.6   0.0   0:18.95 run
 =================================== P1Q1 end ===================================
 
 ================================== P1Q2 start ==================================
@@ -61,24 +62,25 @@ Describe how you created a real-time priority task.
 
     top - 22:43:34 up 14 min,  2 users,  load average: 11.33, 7.73, 3.59
 Tasks: 187 total,  12 running, 175 sleeping,   0 stopped,   0 zombie
-%Cpu0  :   0.0/0.0     0[                                      ]     %Cpu1  :   0.0/0.0     0[                                      ]
-%Cpu2  :   0.0/0.0     0[                                      ]     %Cpu3  : 100.0/0.0   100[||||||||||||||||||||||||||||||||||||||]
+%Cpu0  :   0.0/0.0     0[                                      ]
+%Cpu1  :   0.0/0.0     0[                                      ]
+%Cpu2  :   0.0/0.0     0[                                      ]
+%Cpu3  : 100.0/0.0   100[||||||||||||||||||||||||||||||||||||||]
 MiB Mem :   7928.4 total,   7232.5 free,    271.4 used,    424.6 buff/cache
-MiB Swap:    975.0 total,    975.0 free,      0.0 used.   7415.4 avail Mem 
+MiB Swap:    975.0 total,    975.0 free,      0.0 used.   7415.4 avail Mem
 
-    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                                        
-    960 root      rt   0    2172    568    504 R  95.7   0.0   0:39.15 run                                                            
-    891 root      10 -10    2172    552    492 R   0.7   0.0   2:55.14 run                                                            
-    893 root      10 -10    2172    568    504 R   0.7   0.0   2:49.91 run                                                            
-    895 root      10 -10    2172    564    504 R   0.7   0.0   2:42.20 run                                                            
-    897 root      10 -10    2172    564    504 R   0.7   0.0   2:47.02 run                                                            
-    899 root      10 -10    2172    500    436 R   0.7   0.0   2:13.47 run                                                            
-    912 root      14  -6    2172    504    440 R   0.3   0.0   0:32.88 run                                                            
-    914 root      14  -6    2172    556    492 R   0.3   0.0   0:32.40 run                                                            
-    916 root      14  -6    2172    504    436 R   0.3   0.0   0:32.87 run                                                            
-    918 root      14  -6    2172    568    504 R   0.3   0.0   0:31.98 run                                                            
-    920 root      14  -6    2172    504    440 R   0.3   0.0   0:32.39 run                                                              
-
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+    960 root      rt   0    2172    568    504 R  95.7   0.0   0:39.15 run
+    891 root      10 -10    2172    552    492 R   0.7   0.0   2:55.14 run
+    893 root      10 -10    2172    568    504 R   0.7   0.0   2:49.91 run
+    895 root      10 -10    2172    564    504 R   0.7   0.0   2:42.20 run
+    897 root      10 -10    2172    564    504 R   0.7   0.0   2:47.02 run
+    899 root      10 -10    2172    500    436 R   0.7   0.0   2:13.47 run
+    912 root      14  -6    2172    504    440 R   0.3   0.0   0:32.88 run
+    914 root      14  -6    2172    556    492 R   0.3   0.0   0:32.40 run
+    916 root      14  -6    2172    504    436 R   0.3   0.0   0:32.87 run
+    918 root      14  -6    2172    568    504 R   0.3   0.0   0:31.98 run
+    920 root      14  -6    2172    504    440 R   0.3   0.0   0:32.39 run
 =================================== P1Q2 end ===================================
 
 
@@ -87,7 +89,25 @@ MiB Swap:    975.0 total,    975.0 free,      0.0 used.   7415.4 avail Mem
 The output of diff or diffconfig when comparing the config files for your 
 mainline fallback kernel and your MuQSS kernel
 
-    /* TODO */
+    scripts/diffconfig .config /boot/config-5.10.57-cs4118
+-RQ_ALL n
+-RQ_MC y
+-RQ_MC_LLC n
+-RQ_NONE n
+-RQ_SMP n
+-RQ_SMT n
+-SCHED_MUQSS y
+-SHARERQ 2
+-SMT_NICE y
+ LOCALVERSION "-nm3077-muqss" -> "-cs4118"
++CFS_BANDWIDTH y
++CGROUP_CPUACCT y
++FAIR_GROUP_SCHED y
++NUMA_BALANCING y
++NUMA_BALANCING_DEFAULT_ENABLED y
++RT_GROUP_SCHED n
++SCHED_AUTOGROUP y
+
 
 =================================== P2Q1 end ===================================
 
@@ -95,7 +115,62 @@ mainline fallback kernel and your MuQSS kernel
 Indicate you successfully patched, built, and booted into your MuQSS-enabled 
 Linux kernel.
 
-    /* TODO */ 
+We successfully patched, built, and booted into our MuQSS-enabled
+Linux kernel.
+
+grep output below:
+
+[    0.274684] MuQSS possible/present/online CPUs: 128/4/4
+[    0.274686] MuQSS locality CPU 0 to 0: 0
+[    0.274686] MuQSS locality CPU 0 to 1: 4
+[    0.274686] MuQSS locality CPU 0 to 2: 4
+[    0.274687] MuQSS locality CPU 0 to 3: 4
+[    0.274687] MuQSS locality CPU 1 to 0: 4
+[    0.274687] MuQSS locality CPU 1 to 1: 0
+[    0.274688] MuQSS locality CPU 1 to 2: 4
+[    0.274688] MuQSS locality CPU 1 to 3: 4
+[    0.274688] MuQSS locality CPU 2 to 0: 4
+[    0.274689] MuQSS locality CPU 2 to 1: 4
+[    0.274689] MuQSS locality CPU 2 to 2: 0
+[    0.274689] MuQSS locality CPU 2 to 3: 4
+[    0.274690] MuQSS locality CPU 3 to 0: 4
+[    0.274690] MuQSS locality CPU 3 to 1: 4
+[    0.274690] MuQSS locality CPU 3 to 2: 4
+[    0.274691] MuQSS locality CPU 3 to 3: 0
+[    0.274775] MuQSS CPU 0 llc 0 RQ order 0 RQ 0 llc 0
+[    0.274775] MuQSS CPU 0 llc 0 RQ order 1 RQ 1 llc 2
+[    0.274776] MuQSS CPU 0 llc 0 RQ order 2 RQ 2 llc 4
+[    0.274776] MuQSS CPU 0 llc 0 RQ order 3 RQ 3 llc 6
+[    0.274777] MuQSS CPU 1 llc 2 RQ order 0 RQ 1 llc 2
+[    0.274777] MuQSS CPU 1 llc 2 RQ order 1 RQ 2 llc 4
+[    0.274777] MuQSS CPU 1 llc 2 RQ order 2 RQ 3 llc 6
+[    0.274778] MuQSS CPU 1 llc 2 RQ order 3 RQ 0 llc 0
+[    0.274778] MuQSS CPU 2 llc 4 RQ order 0 RQ 2 llc 4
+[    0.274779] MuQSS CPU 2 llc 4 RQ order 1 RQ 1 llc 2
+[    0.274779] MuQSS CPU 2 llc 4 RQ order 2 RQ 0 llc 0
+[    0.274779] MuQSS CPU 2 llc 4 RQ order 3 RQ 3 llc 6
+[    0.274780] MuQSS CPU 3 llc 6 RQ order 0 RQ 3 llc 6
+[    0.274780] MuQSS CPU 3 llc 6 RQ order 1 RQ 2 llc 4
+[    0.274781] MuQSS CPU 3 llc 6 RQ order 2 RQ 1 llc 2
+[    0.274781] MuQSS CPU 3 llc 6 RQ order 3 RQ 0 llc 0
+[    0.274782] MuQSS CPU 0 llc 0 CPU order 0 RQ 0 llc 0
+[    0.274782] MuQSS CPU 0 llc 0 CPU order 1 RQ 1 llc 2
+[    0.274782] MuQSS CPU 0 llc 0 CPU order 2 RQ 2 llc 4
+[    0.274783] MuQSS CPU 0 llc 0 CPU order 3 RQ 3 llc 6
+[    0.274783] MuQSS CPU 1 llc 2 CPU order 0 RQ 1 llc 2
+[    0.274784] MuQSS CPU 1 llc 2 CPU order 1 RQ 2 llc 4
+[    0.274784] MuQSS CPU 1 llc 2 CPU order 2 RQ 3 llc 6
+[    0.274784] MuQSS CPU 1 llc 2 CPU order 3 RQ 0 llc 0
+[    0.274785] MuQSS CPU 2 llc 4 CPU order 0 RQ 2 llc 4
+[    0.274785] MuQSS CPU 2 llc 4 CPU order 1 RQ 1 llc 2
+[    0.274786] MuQSS CPU 2 llc 4 CPU order 2 RQ 0 llc 0
+[    0.274786] MuQSS CPU 2 llc 4 CPU order 3 RQ 3 llc 6
+[    0.274786] MuQSS CPU 3 llc 6 CPU order 0 RQ 3 llc 6
+[    0.274787] MuQSS CPU 3 llc 6 CPU order 1 RQ 2 llc 4
+[    0.274787] MuQSS CPU 3 llc 6 CPU order 2 RQ 1 llc 2
+[    0.274788] MuQSS CPU 3 llc 6 CPU order 3 RQ 0 llc 0
+[    0.274788] MuQSS runqueue share type MC total runqueues: 4
+[    1.725165] MuQSS CPU scheduler v0.205 by Con Kolivas.
 
 =================================== P2Q2 end ===================================
 
@@ -117,7 +192,7 @@ Describe how you created a real-time priority task.
     - Indicate if you needed root privileges for any of those commands
     - How were the results different from P1Q2, if at all.
 
-    /* TODO */ 
+    /* TODO */
 
 =================================== P3Q2 end ===================================
 
@@ -135,7 +210,7 @@ without root privileges, and describe the differences.
 Verify Con Kolivas' claim by timing the kernel build-time in both your fallback
 and your MuQSS-patched kernels.
     
-    /* TODO */ 
+    /* TODO */
 
 =================================== P4Q1 end ===================================
 
@@ -143,7 +218,7 @@ and your MuQSS-patched kernels.
 Design an experiment that you think will highlight MuQSS’s strength. Perform 
 the experiment and report your findings.
 
-    /* TODO */ 
+    /* TODO */
 
 =================================== P4Q2 end ===================================
 
@@ -152,21 +227,33 @@ the experiment and report your findings.
 ================================== P5Q1 start ==================================
 Briefly describe the advantages and disadvantages of a larger HZ.
 
-    Large HZ increases the frequency with which timer interrupts occur within the kernel. This means that processes will be scheduled with finer granularity — improving overall fairness of the underlying algorithm. On the other hand, more frequent timer interrupts imply more context switches, contributing overhead in cache repopulation and state restoration. 
+    Large HZ increases the frequency with which timer interrupts occur within the kernel. This means that processes will be scheduled with finer granularity — improving overall fairness of the underlying algorithm. On the other hand, more frequent timer interrupts imply more context switches, contributing overhead in cache repopulation and state restoration.
 
 =================================== P5Q1 end ===================================
 
 ================================== P5Q2 start ==================================
 What is the HZ currently configured for your running Linux system?
 
-    250?
+    250. We confirmed this in a kernel module that printed out HZ as an unsigned int with printk.
+
+	We used the following include statements:
+	#include <linux/module.h>
+	#include <linux/printk.h>
+	#include <linux/types.h>
+
+	We used the following printk line:
+	printk(KERN_INFO "HZ:%u\n", HZ);
 
 =================================== P5Q2 end ===================================
 
 ================================== P5Q3 start ==================================
 What are jiffies? Explain the relationship between jiffies, HZ, and time.
 
-    Jiffies are a global count of the number of ticks that have occurred since the system booted up — where one tick is defined by one timer interrupt. Thus, because there are HZ timer interrupts per second 
+    Jiffies are a global count of the number of ticks that have occurred since the system booted up — where one tick is defined by one timer interrupt. Thus, because there are HZ timer interrupts per second
+
+	jiffies = HZ * uptime
+
+	where uptime is measured in seconds
 
 =================================== P5Q3 end ===================================
 
@@ -175,24 +262,22 @@ Find the current value of jiffies in your system.
     - In minutes, how much time does this jiffies value represent?
 	We found this many jiffies had passed: 4296494507
 	This corresponds to 286432 minutes.
-	
+
     - Does it match the uptime reported by the uptime command? (Hint: it 
       doesn’t.) Please give the formula to convert jiffies to the current 
       (real) uptime, in minutes.
-	  No. The uptime given is 106 minutes. 
+	  No. The uptime given is 106 minutes.
 	  Formula: (Jiffies - offset)/(HZ*60)
 
     - Why does this large difference exist? (Hint: in 32-bit Linux systems,
       jiffies is a 32-bit value.)
-	  Jiffies start with an offset value that is higher than zero so that the value will overflow more often.
-
-     
+	  Jiffies starts with an offset value close to 2^32-1 to encourage frequent overflow of the 32-bit jiffies value.
 
 =================================== P5Q4 end ===================================
 
 ================================== P5Q5 start ==================================
 What are Niffies? How do they differ from Jiffies?
 
-    Niffies are the nano-second granularity equivalent of jiffies. They are tracked per run queue 
+    Niffies are the nano-second granularity equivalent of jiffies. They are tracked per run queue. Niffies differ from jiffies because they ar a higher resolution. They have nanosecond resolution and jiffies tend to have millisecond resolution.
 
 =================================== P5Q5 end ===================================
