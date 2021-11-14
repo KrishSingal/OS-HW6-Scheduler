@@ -356,6 +356,7 @@ extern bool dl_cpu_busy(unsigned int cpu);
 
 struct cfs_rq;
 struct rt_rq;
+struct freezer_rq;
 
 extern struct list_head task_groups;
 
@@ -657,6 +658,12 @@ static inline bool rt_rq_is_runnable(struct rt_rq *rt_rq)
 	return rt_rq->rt_queued && rt_rq->rt_nr_running;
 }
 
+/* Freezer class' related fields in a runqueue */
+
+struct freezer_rq {
+
+};
+
 /* Deadline class' related fields in a runqueue */
 struct dl_rq {
 	/* runqueue is an rbtree, ordered by deadline */
@@ -932,6 +939,7 @@ struct rq {
 	struct cfs_rq		cfs;
 	struct rt_rq		rt;
 	struct dl_rq		dl;
+	struct freezer_rq	fr;
 
 #ifdef CONFIG_FAIR_GROUP_SCHED
 	/* list of leaf cfs_rq on this CPU: */
