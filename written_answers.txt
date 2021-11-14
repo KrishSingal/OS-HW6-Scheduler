@@ -249,7 +249,17 @@ without root privileges, and describe the differences.
 Verify Con Kolivas' claim by timing the kernel build-time in both your fallback
 and your MuQSS-patched kernels.
     
-    /* TODO */
+Compiled with fallback kernel
+    real	15m39.528s
+	user	38m36.097s
+	sys		5m5.987s
+
+Compiled with MuQSS
+	real	12m10.234s
+	user	49m21.650s
+	sys		5m7.475s
+
+As we can see, the MuQSS kernel compiles it faster. This is expected.
 
 =================================== P4Q1 end ===================================
 
