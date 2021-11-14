@@ -267,7 +267,19 @@ As we can see, the MuQSS kernel compiles it faster. This is expected.
 Design an experiment that you think will highlight MuQSS’s strength. Perform 
 the experiment and report your findings.
 
-    /* TODO */
+    MuQSS
+
+	real    2m3.101s
+	user    1m18.766s
+	sys     0m0.166s
+
+	fallback
+
+	real    1m15.570s
+	user    1m15.449s
+	sys     0m0.058s
+
+	we wrote a program that forks five times, sets the affinity of each process to the same cpu #3, and then runs in a while loop for a long amount of time. The initial parent process waits for all the chilren to finish. We expected the MuQss kernel would be better at handling this because it is a "fairer" scheduler. However, we found that the fallback kernel using CFS was almost twice as fast. This is likely attributed to the VM.
 
 =================================== P4Q2 end ===================================
 

@@ -2,8 +2,8 @@ CC = gcc
 CFLAGS = -g -Wall -Werror
 LDFLAGS = -g
 
-TARGETS = run
-OBJS = run.o 
+TARGETS = test
+OBJS = test.o 
 
 $(TARGETS):
 $(OBJS):
