@@ -182,6 +182,7 @@ Describe how you created the 70%/30% split.
     - Indicate if you needed root privileges for any of those commands
     - How were the results different from P1Q1, if at all.
 
+	USING DIFFERENT NICE VALUES TO CREATE 70/30 SPLIT
     Command lines used:
 	sudo nice --adjustment=-14 ./run &
 	sudo nice --adjustment=-6 ./run &
@@ -193,6 +194,18 @@ Describe how you created the 70%/30% split.
 	this created a 70/30 split. We found that 5 processes took up about 15% each which means they took up around 75% in total. The other 5 processes took up about 7% each so they took up around 35% in total.
 	This is curious as the total percentage of CPU usage across the single processor adds up to 110%. This differs from our previous reuslts in two ways. First, we have to use different nice values due to the difference in scale between priorities in the MuQss kernel. Second, the total compute resources add up to 110% instead of 100%
 
+	USING SAME NICE VALUES AS PART 1
+	Command lines used:
+ 	sudo nice --adjustment=-10 ./run &
+ 	sudo nice --adjustment=-6 ./run &
+ 	sudo taskset -p --cpu-list 3 <PID>
+ 	top -1
+
+ 	We needed root privileges to run nice and taskset commands.
+
+ 	this did not create a 70/30 split. Instead we found that 5 processes took up about 12% each which means they took up around 60% in total. The other 5 processes took up about 10% each so they took up around 50% in total.
+ 	This is curious as the total percentage of CPU usage across the single processor adds up to 110%. Notably the processes with nice value -6 and those with nice value -10 are more similar in their CPU usage percentage than in the previous kernel.
+
 =================================== P3Q1 end ===================================
 
 ================================== P3Q2 start ==================================
@@ -202,7 +215,7 @@ Describe how you created a real-time priority task.
     - How were the results different from P1Q2, if at all.
 
     Command lines used:
-	sudo nice --adjustment=-14 ./run &
+	sudo nice --adjustment=-10 ./run &
 	sudo nice --adjustment=-6 ./run &
 	sudo nice --adjustment=0 ./run &
 	sudo taskset -p --cpu-list 3 <PID>
@@ -223,7 +236,7 @@ MuQSS features unprivileged real-time tasks. Perform the previous task with and
 without root privileges, and describe the differences. 
 
 	Command lines used:
-	sudo nice --adjustment=-14 ./run &
+	sudo nice --adjustment=-10 ./run &
 	sudo nice --adjustment=-6 ./run &
 	sudo taskset -p --cpu-list 3 <PID>
 	sudo chrt -p 99 <PID>
