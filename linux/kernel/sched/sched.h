@@ -661,7 +661,8 @@ static inline bool rt_rq_is_runnable(struct rt_rq *rt_rq)
 /* Freezer class' related fields in a runqueue */
 
 struct freezer_rq {
-
+	unsigned int fr_nr_running;
+	struct fr_prio_array active; //find out what the bitmask is in rt counterpart
 };
 
 /* Deadline class' related fields in a runqueue */
