@@ -6314,6 +6314,7 @@ SYSCALL_DEFINE1(sched_get_priority_max, int, policy)
 		ret = MAX_USER_RT_PRIO-1;
 		break;
 	case SCHED_DEADLINE:
+	case SCHED_FREEZER:
 	case SCHED_NORMAL:
 	case SCHED_BATCH:
 	case SCHED_IDLE:
@@ -6341,6 +6342,7 @@ SYSCALL_DEFINE1(sched_get_priority_min, int, policy)
 		ret = 1;
 		break;
 	case SCHED_DEADLINE:
+	case SCHED_FREEZER:
 	case SCHED_NORMAL:
 	case SCHED_BATCH:
 	case SCHED_IDLE:

@@ -172,14 +172,20 @@ static inline int rt_policy(int policy)
 	return policy == SCHED_FIFO || policy == SCHED_RR;
 }
 
+static inline int freezer_policy(int policy)
+{
+	return policy == SCHED_FREEZER;
+}
+
 static inline int dl_policy(int policy)
 {
 	return policy == SCHED_DEADLINE;
 }
+
 static inline bool valid_policy(int policy)
 {
 	return idle_policy(policy) || fair_policy(policy) ||
-		rt_policy(policy) || dl_policy(policy);
+		rt_policy(policy) || dl_policy(policy) || freezer_policy(policy);
 }
 
 static inline int task_has_idle_policy(struct task_struct *p)
@@ -662,7 +668,7 @@ static inline bool rt_rq_is_runnable(struct rt_rq *rt_rq)
 
 struct freezer_rq {
 	unsigned int fr_nr_running;
-	struct fr_prio_array active;
+	struct list_head active;
 	//find out what the bitmask is in rt counterpart
 };
 
