@@ -9,3 +9,5 @@ communicate to the grader, such as extra functionality you implemented or how
 you tried to fix your non-working code.
 
 Parts 1-5: Completed successfully
+
+Part 6: Completed. Kernel compiles and we can boot into it.
