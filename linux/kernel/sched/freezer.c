@@ -45,6 +45,7 @@ static void yield_task_freezer(struct rq *rq)
 {
 	pr_info("Yield task freezer");
 	list_move_tail(&rq->curr->fr.run_list, &rq->fr.active);	
+	update_curr_freezer(rq);
 }
 
 static void 
@@ -57,14 +58,16 @@ check_preempt_curr_freezer(struct rq *rq, struct task_struct *p, int flags)
 static struct task_struct *pick_next_task_freezer(struct rq *rq)
 {
 	struct sched_freezer_entity *fr_se;
+	struct task_struct *p;
 
 	pr_info("Pick next task freezer");
 	if (rq->fr.fr_nr_running == 0)
 		return NULL;
 	
 	fr_se = list_first_entry(&rq->fr.active, struct sched_freezer_entity, run_list);
-	
-	return container_of(fr_se, struct task_struct, fr);
+	p = container_of(fr_se, struct task_struct, fr);
+	p->se.exec_start = rq_clock_task(rq);
+	return p;
 }
 
 static void put_prev_task_freezer(struct rq *rq, struct task_struct *p)
