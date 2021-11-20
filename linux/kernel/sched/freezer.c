@@ -99,7 +99,7 @@ select_task_rq_freezer(struct task_struct *p, int cpu, int sd_flag, int flags)
 	int min_cpu = task_cpu(p);
 	int min = ((int)(~0U >> 1)); //MAX INT
 	pr_info("Select task rq freezer");
-	for_each_cpu(i, &p->cpus_mask) {
+	for_each_cpu(i, p->cpus_ptr) {
 		struct rq *rq = cpu_rq(i);
 		if (rq->fr.fr_nr_running < min) {
 			min = rq->fr.fr_nr_running;
