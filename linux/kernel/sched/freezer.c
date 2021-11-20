@@ -181,3 +181,8 @@ const struct sched_class freezer_sched_class
 	.update_curr = update_curr_freezer,
 	
 };
+
+void init_fr_rq(struct freezer_rq *fr_rq){
+	INIT_LIST_HEAD(&fr_rq->active);
+	fr_rq->fr_nr_running = 0;
+}
