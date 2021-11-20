@@ -17,6 +17,7 @@ static void
 dequeue_task_freezer(struct rq *rq, struct task_struct *p, int flags)
 {
 	pr_info("Dequeue task freezer");
+	update_curr_freezer(rq);
 	list_delete(&p->fr.run_list);
 	rq->fr.fr_nr_running--;
 	p->fr.on_rq = 0;
@@ -65,7 +66,6 @@ static int
 balance_freezer(struct rq *rq, struct task_struct *p, struct rq_flags *rf)
 {
 	pr_info("Balance freezer");
-	// No need to implement?
 	return sched_stop_runnable(rq) || sched_dl_runnable(rq) || 
 		sched_rt_runnable(rq) || rq->fr.fr_nr_running > 0;
 }
@@ -74,45 +74,80 @@ static int
 select_task_rq_freezer(struct task_struct *p, int cpu, int sd_flag, int flags)
 {
 	pr_info("Select task rq freezer");
-	
+	int i;
+	int min_cpu = task_cpu(p);
+	int min = ((int)(~0U >> 1)); //MAX INT
+	for_each_cpu(i, &p->cpus_mask) {
+		struct rq *rq = cpu_rq(i);
+		if (rq->fr.fr_nr_running < min) {
+			min = rq->fr.fr_nr_running;
+			min_cpu = i;
+		}
+	}
+	return min_cpu;
 }
 #endif
 
 static void task_tick_freezer(struct rq *rq, struct task_struct *p, int queued)
 {
 	pr_info("Task tick freezer");
+	update_curr_freezer(rq);
+
+	if (--p->fr.time_slice)
+		return;
+
+	p->fr.time_slice = FREEZER_TIMESLICE;
+
+	//Move to back of list if not only element
+	if (p->fr.run_list.prev != p->fr.run_list.next) {
+			list_move_tail(&p->fr.run_list, &rq->fr.active);	
+			resched_curr(rq);
+			return;
+	}
 }
 
 static void switched_from_freezer(struct rq *rq, struct task_struct *p)
 {
-	//Do we need?
 	pr_info("Switched from freezer");
+	//Do we need?
 }
 
 static void switched_to_freezer(struct rq *rq, struct task_struct *p)
 {
 	pr_info("Switched to freezer");
+	//No Op?
 }
 
 static void
 prio_changed_freezer(struct rq *rq, struct task_struct *p, int oldprio)
 {
-	//Do we care?
 	pr_info("Prio changed freezer");
+	//No Op?
 }
 
 static unsigned int 
 get_rr_interval_freezer(struct rq *rq, struct task_struct *task)
 {
-	//Prob just timeslice
 	pr_info("Get rr interval freezer");
+	return FREEZER_TIMESLICE;
 }
 
 static void update_curr_freezer(struct rq *rq)
 {
-	// updates statistics, not sure whether we need to have
-	// non-empty implementation
+	// updates statistics
 	pr_info("Update curr freezer");
+	struct task_struct *curr = rq->curr;
+	struct sched_freezer_entity *fr_se = &curr->fr;
+	u64 delta_exec;
+	u64 now;
+	now = rq_clock_task(rq);
+	delta_exec = now - curr->se.exec_start;
+	if (unlikely((s64)delta_exec <= 0))
+		return;
+	schedstat_set(curr->se.statistics.exec_max,
+		      max(curr->se.statistics.exec_max, delta_exec));
+	curr->se.sum_exec_runtime += delta_exec;
+	curr->se.exec_start = now;
 }
 
 const struct sched_class freezer_sched_class 
