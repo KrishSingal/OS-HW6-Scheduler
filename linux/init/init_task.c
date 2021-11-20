@@ -94,6 +94,10 @@ struct task_struct init_task
 		.run_list	= LIST_HEAD_INIT(init_task.rt.run_list),
 		.time_slice	= RR_TIMESLICE,
 	},
+	.fr		= {
+		.run_list	= LIST_HEAD_INIT(init_task.fr.run_list),
+		.time_slice	= FREEZER_TIMESLICE,
+	},
 	.tasks		= LIST_HEAD_INIT(init_task.tasks),
 #ifdef CONFIG_SMP
 	.pushable_tasks	= PLIST_NODE_INIT(init_task.pushable_tasks, MAX_PRIO),

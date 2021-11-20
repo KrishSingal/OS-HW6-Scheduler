@@ -1,2 +1,6 @@
-//INCLUDE HZ
+#ifndef _LINUX_SCHED_IDLE_H
+#define _LINUX_SCHED_IDLE_H
+
 #define FREEZER_TIMESLICE (100 * HZ / 1000)
+
+#endif
