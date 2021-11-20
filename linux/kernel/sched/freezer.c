@@ -4,6 +4,24 @@
 /*
  * freezer scheduling policy implementation
  */
+static void update_curr_freezer(struct rq *rq)
+{
+	// updates statistics
+	struct task_struct *curr = rq->curr;
+	// struct sched_freezer_entity *fr_se = &curr->fr;
+	u64 delta_exec;
+	u64 now;
+	pr_info("Update curr freezer");
+	now = rq_clock_task(rq);
+	delta_exec = now - curr->se.exec_start;
+	if (unlikely((s64)delta_exec <= 0))
+		return;
+	schedstat_set(curr->se.statistics.exec_max,
+		      max(curr->se.statistics.exec_max, delta_exec));
+	curr->se.sum_exec_runtime += delta_exec;
+	curr->se.exec_start = now;
+}
+
 static void 
 enqueue_task_freezer(struct rq *rq, struct task_struct *p, int flags)
 {
@@ -18,7 +36,7 @@ dequeue_task_freezer(struct rq *rq, struct task_struct *p, int flags)
 {
 	pr_info("Dequeue task freezer");
 	update_curr_freezer(rq);
-	list_delete(&p->fr.run_list);
+	list_del(&p->fr.run_list);
 	rq->fr.fr_nr_running--;
 	p->fr.on_rq = 0;
 }
@@ -73,10 +91,10 @@ balance_freezer(struct rq *rq, struct task_struct *p, struct rq_flags *rf)
 static int
 select_task_rq_freezer(struct task_struct *p, int cpu, int sd_flag, int flags)
 {
-	pr_info("Select task rq freezer");
 	int i;
 	int min_cpu = task_cpu(p);
 	int min = ((int)(~0U >> 1)); //MAX INT
+	pr_info("Select task rq freezer");
 	for_each_cpu(i, &p->cpus_mask) {
 		struct rq *rq = cpu_rq(i);
 		if (rq->fr.fr_nr_running < min) {
@@ -130,24 +148,6 @@ get_rr_interval_freezer(struct rq *rq, struct task_struct *task)
 {
 	pr_info("Get rr interval freezer");
 	return FREEZER_TIMESLICE;
-}
-
-static void update_curr_freezer(struct rq *rq)
-{
-	// updates statistics
-	pr_info("Update curr freezer");
-	struct task_struct *curr = rq->curr;
-	struct sched_freezer_entity *fr_se = &curr->fr;
-	u64 delta_exec;
-	u64 now;
-	now = rq_clock_task(rq);
-	delta_exec = now - curr->se.exec_start;
-	if (unlikely((s64)delta_exec <= 0))
-		return;
-	schedstat_set(curr->se.statistics.exec_max,
-		      max(curr->se.statistics.exec_max, delta_exec));
-	curr->se.sum_exec_runtime += delta_exec;
-	curr->se.exec_start = now;
 }
 
 const struct sched_class freezer_sched_class 

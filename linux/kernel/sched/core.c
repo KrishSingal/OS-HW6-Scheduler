@@ -11,6 +11,7 @@
 #undef CREATE_TRACE_POINTS
 
 #include "sched.h"
+#include <linux/sched/freezer.h>
 
 #include <linux/nospec.h>
 
