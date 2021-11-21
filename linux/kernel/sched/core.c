@@ -3247,7 +3247,7 @@ int sched_fork(unsigned long clone_flags, struct task_struct *p)
 	 * Revert to default priority/policy on fork if requested.
 	 */
 	if (unlikely(p->sched_reset_on_fork)) {
-		if (task_has_dl_policy(p) || task_has_rt_policy(p)) {
+		if (task_has_dl_policy(p) || task_has_rt_policy(p) || p->policy == SCHED_NORMAL /*check if policy normal*/) {
 			p->policy = SCHED_FREEZER;
 			p->static_prio = NICE_TO_PRIO(0);
 			p->rt_priority = 0;
@@ -3284,16 +3284,23 @@ int sched_fork(unsigned long clone_flags, struct task_struct *p)
 	 *
 	 * Silence PROVE_RCU.
 	 */
+	pr_info("in spin lock");
 	raw_spin_lock_irqsave(&p->pi_lock, flags);
+	pr_info("Got spin lock");
 	rseq_migrate(p);
+	pr_info("After Migrate");
 	/*
 	 * We're setting the CPU for the first time, we don't migrate,
 	 * so use __set_task_cpu().
 	 */
 	__set_task_cpu(p, smp_processor_id());
+	pr_info("set cpu");
 	if (p->sched_class->task_fork)
 		p->sched_class->task_fork(p);
+		pr_info("in if");
 	raw_spin_unlock_irqrestore(&p->pi_lock, flags);
+	pr_info("unlock");
+	
 
 #ifdef CONFIG_SCHED_INFO
 	if (likely(sched_info_on()))
@@ -3306,6 +3313,7 @@ int sched_fork(unsigned long clone_flags, struct task_struct *p)
 #ifdef CONFIG_SMP
 	plist_node_init(&p->pushable_tasks, MAX_PRIO);
 	RB_CLEAR_NODE(&p->pushable_dl_tasks);
+	pr_info("end if ");
 #endif
 	return 0;
 }
@@ -4346,14 +4354,15 @@ pick_next_task(struct rq *rq, struct task_struct *prev, struct rq_flags *rf)
 	 * higher scheduling class, because otherwise those loose the
 	 * opportunity to pull in more work from other CPUs.
 	 */
-	if (likely(prev->sched_class <= &fair_sched_class &&
-		   rq->nr_running == rq->cfs.h_nr_running)) {
+	//change so that it uses freezer instead comment out
+	if (likely(prev->sched_class <= &freezer_sched_class &&
+		   rq->nr_running == rq->fr.fr_nr_running)) {
 
-		p = pick_next_task_fair(rq, prev, rf);
+		p = pick_next_task_freezer(rq);
 		if (unlikely(p == RETRY_TASK))
 			goto restart;
 
-		/* Assumes fair_sched_class->next == idle_sched_class */
+		//Assumes fair_sched_class->next == idle_sched_class
 		if (!p) {
 			put_prev_task(rq, prev);
 			p = pick_next_task_idle(rq);
@@ -7352,7 +7361,7 @@ void normalize_rt_tasks(void)
 {
 	struct task_struct *g, *p;
 	struct sched_attr attr = {
-		.sched_policy = SCHED_NORMAL,
+		.sched_policy = SCHED_FREEZER,
 	};
 
 	read_lock(&tasklist_lock);

@@ -30,6 +30,10 @@ static void
 enqueue_task_freezer(struct rq *rq, struct task_struct *p, int flags)
 {
 	pr_info("enqueue task");
+	pr_info("PID:%d TGID: %d", p->pid, p->tgid);
+	pr_info("-------------");
+	if(p->fr.on_rq)
+		return;
 	list_add_tail(&p->fr.run_list, &rq->fr.active);
 	rq->fr.fr_nr_running++;
 	p->fr.on_rq = 1;
@@ -62,7 +66,7 @@ check_preempt_curr_freezer(struct rq *rq, struct task_struct *p, int flags)
 	pr_info("check preempt curr");
 }
 
-static struct task_struct *pick_next_task_freezer(struct rq *rq)
+struct task_struct *pick_next_task_freezer(struct rq *rq)
 {
 	struct sched_freezer_entity *fr_se;
 	struct task_struct *p;
@@ -80,6 +84,7 @@ static struct task_struct *pick_next_task_freezer(struct rq *rq)
 static void put_prev_task_freezer(struct rq *rq, struct task_struct *p)
 {
 	pr_info("put prev task");
+	list_move_tail(&p->fr.run_list, &rq->fr.active);
 	update_curr_freezer(rq);
 }
 
@@ -87,6 +92,7 @@ static void
 set_next_task_freezer(struct rq *rq, struct task_struct *p, bool first)
 {
 	pr_info("set next task");
+	list_move(&p->fr.run_list, &rq->fr.active);
 	p->se.exec_start = rq_clock_task(rq);
 }
 
@@ -132,7 +138,7 @@ static void task_tick_freezer(struct rq *rq, struct task_struct *p, int queued)
 	p->fr.time_slice = FREEZER_TIMESLICE;
 
 	//Move to back of list if not only element
-	if (p->fr.run_list.prev != p->fr.run_list.next) {
+	if (p->fr.run_list.prev != p->fr.run_list.next) { //check nr_running?
 		list_move_tail(&p->fr.run_list, &rq->fr.active);
 		resched_curr(rq);
 		return;
@@ -141,13 +147,15 @@ static void task_tick_freezer(struct rq *rq, struct task_struct *p, int queued)
 
 static void switched_from_freezer(struct rq *rq, struct task_struct *p)
 {
-	//Do we need?
+	//No Op
 	pr_info("switched from");
 }
 
 static void switched_to_freezer(struct rq *rq, struct task_struct *p)
 {
-	//No Op?
+	//check if task is on rq and not dl and not rt call resched
+	if (p->fr.on_rq && !task_has_dl_policy(p) && !task_has_rt_policy(p) && rq->curr != p)
+		resched_curr(rq);
 	pr_info("switched to");
 }
 
