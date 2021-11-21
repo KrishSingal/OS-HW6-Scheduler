@@ -3267,6 +3267,8 @@ int sched_fork(unsigned long clone_flags, struct task_struct *p)
 		return -EAGAIN;
 	else if (rt_prio(p->prio))
 		p->sched_class = &rt_sched_class;
+	/*else if(p->policy == SCHED_FREEZER)
+		p->sched_class = &freezer_sched_class;*/
 	else
 		p->sched_class = &fair_sched_class;
 
@@ -4931,7 +4933,10 @@ void rt_mutex_setprio(struct task_struct *p, struct task_struct *pi_task)
 			p->dl.pi_se = &p->dl;
 		if (rt_prio(oldprio))
 			p->rt.timeout = 0;
-		p->sched_class = &fair_sched_class;
+		if(p->policy == SCHED_FREEZER)
+			p->sched_class = &freezer_sched_class;
+		else
+			p->sched_class = &fair_sched_class;
 	}
 
 	p->prio = prio;
