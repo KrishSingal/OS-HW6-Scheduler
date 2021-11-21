@@ -3227,6 +3227,7 @@ int sched_fork(unsigned long clone_flags, struct task_struct *p)
 {
 	unsigned long flags;
 
+	pr_info("In sched fork");
 	__sched_fork(clone_flags, p);
 	/*
 	 * We mark the process as NEW here. This guarantees that
@@ -3267,8 +3268,10 @@ int sched_fork(unsigned long clone_flags, struct task_struct *p)
 		return -EAGAIN;
 	else if (rt_prio(p->prio))
 		p->sched_class = &rt_sched_class;
-	/*else if(p->policy == SCHED_FREEZER)
-		p->sched_class = &freezer_sched_class;*/
+	else if(p->policy == SCHED_FREEZER) {
+		pr_info("Fork to freezer");
+		p->sched_class = &freezer_sched_class;
+	}
 	else
 		p->sched_class = &fair_sched_class;
 
