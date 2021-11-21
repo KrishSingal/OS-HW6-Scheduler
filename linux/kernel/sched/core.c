@@ -5584,7 +5584,7 @@ EXPORT_SYMBOL_GPL(sched_set_fifo_low);
 void sched_set_normal(struct task_struct *p, int nice)
 {
 	struct sched_attr attr = {
-		.sched_policy = SCHED_FREEZER,
+		.sched_policy = SCHED_NORMAL,
 		.sched_nice = nice,
 	};
 	WARN_ON_ONCE(sched_setattr_nocheck(p, &attr) != 0);
@@ -7344,7 +7344,7 @@ void normalize_rt_tasks(void)
 {
 	struct task_struct *g, *p;
 	struct sched_attr attr = {
-		.sched_policy = SCHED_FREEZER,
+		.sched_policy = SCHED_NORMAL,
 	};
 
 	read_lock(&tasklist_lock);
