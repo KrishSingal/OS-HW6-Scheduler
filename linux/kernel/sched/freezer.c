@@ -11,6 +11,9 @@ static void update_curr_freezer(struct rq *rq)
 	u64 delta_exec;
 	u64 now;
 
+	if (curr->sched_class != &freezer_sched_class)
+		return;
+
 	now = rq_clock_task(rq);
 	delta_exec = now - curr->se.exec_start;
 	if (unlikely((s64)delta_exec <= 0))
@@ -32,6 +35,9 @@ enqueue_task_freezer(struct rq *rq, struct task_struct *p, int flags)
 static void
 dequeue_task_freezer(struct rq *rq, struct task_struct *p, int flags)
 {
+	if(!p->fr.on_rq)
+		return;
+
 	update_curr_freezer(rq);
 	list_del(&p->fr.run_list);
 	rq->fr.fr_nr_running--;
