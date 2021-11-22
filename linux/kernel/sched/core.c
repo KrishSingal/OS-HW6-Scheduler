@@ -4346,7 +4346,6 @@ pick_next_task(struct rq *rq, struct task_struct *prev, struct rq_flags *rf)
 	 * opportunity to pull in more work from other CPUs.
 	 */
 
-restart:
 	put_prev_task_balance(rq, prev, rf);
 
 	for_each_class(class) {

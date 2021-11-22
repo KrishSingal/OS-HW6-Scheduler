@@ -1,5 +1,4 @@
 #include "sched.h"
-#include <linux/printk.h>
 
 /*
  * freezer scheduling policy implementation
