@@ -3267,9 +3267,8 @@ int sched_fork(unsigned long clone_flags, struct task_struct *p)
 		return -EAGAIN;
 	else if (rt_prio(p->prio))
 		p->sched_class = &rt_sched_class;
-	else if(p->policy == SCHED_FREEZER) {
+	else if (p->policy == SCHED_FREEZER)
 		p->sched_class = &freezer_sched_class;
-	}
 	else
 		p->sched_class = &fair_sched_class;
 
@@ -3293,7 +3292,7 @@ int sched_fork(unsigned long clone_flags, struct task_struct *p)
 		p->sched_class->task_fork(p);
 
 	raw_spin_unlock_irqrestore(&p->pi_lock, flags);
-	
+
 
 #ifdef CONFIG_SCHED_INFO
 	if (likely(sched_info_on()))
@@ -4346,22 +4345,6 @@ pick_next_task(struct rq *rq, struct task_struct *prev, struct rq_flags *rf)
 	 * higher scheduling class, because otherwise those loose the
 	 * opportunity to pull in more work from other CPUs.
 	 */
-	//change so that it uses freezer instead comment out
-	/*if (likely(prev->sched_class <= &freezer_sched_class &&
-		   rq->nr_running == rq->fr.fr_nr_running)) {
-
-		p = pick_next_task_freezer(rq);
-		if (unlikely(p == RETRY_TASK))
-			goto restart;
-
-		//Assumes fair_sched_class->next == idle_sched_class
-		if (!p) {
-			put_prev_task(rq, prev);
-			p = pick_next_task_idle(rq);
-		}
-
-		return p;
-	}*/
 
 restart:
 	put_prev_task_balance(rq, prev, rf);
@@ -4937,7 +4920,7 @@ void rt_mutex_setprio(struct task_struct *p, struct task_struct *pi_task)
 			p->dl.pi_se = &p->dl;
 		if (rt_prio(oldprio))
 			p->rt.timeout = 0;
-		if(p->policy == SCHED_FREEZER)
+		if (p->policy == SCHED_FREEZER)
 			p->sched_class = &freezer_sched_class;
 		else
 			p->sched_class = &fair_sched_class;

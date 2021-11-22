@@ -28,3 +28,14 @@ Here is the output of the ps command after we run the first command above and af
 
 0 TS    3 98.6 98    5656 user      |           \_ ./../../../part1/run
 7 #7    3 98.7 98    5656 user      |           \_ ./../../../part1/run
+
+
+Part 8: Working!!!!!!!!
+
+Here are our debug steps:
+
+
+Here are our testing steps:
+We ran several of our 1 infinite loop processes from part 1 at the same time. We noticed that the VM became very slow but continuted to work. We then tried to play around with the VM GUI which was incredibly slow but we still found that it worked. We then killed our infinite loop processes and launched a bunch of chrome youtube tabs to stream hi-res video. This worked but was also very slow. With every way that we tested, we found that the more processes that we ran/more things we did on the VM, the slower our VM became.
+
+We verified all new processes ran on freezer with the ps command. We verified that processes shared resources equally with the top command. We verified that most all processes (all the ones we expected/desired) were running with freezer when we checked the ps command just after boot.
