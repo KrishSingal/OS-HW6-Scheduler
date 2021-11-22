@@ -12,7 +12,7 @@ static void update_curr_freezer(struct rq *rq)
 	u64 delta_exec;
 	u64 now;
 
-	pr_info("update curr");
+	//pr_info("update curr");
 	if (curr->sched_class != &freezer_sched_class)
 		return;
 
@@ -29,9 +29,9 @@ static void update_curr_freezer(struct rq *rq)
 static void
 enqueue_task_freezer(struct rq *rq, struct task_struct *p, int flags)
 {
-	pr_info("enqueue task");
-	pr_info("PID:%d TGID: %d", p->pid, p->tgid);
-	pr_info("-------------");
+	//pr_info("enqueue task");
+	//pr_info("PID:%d TGID: %d", p->pid, p->tgid);
+	//pr_info("-------------");
 	if(p->fr.on_rq)
 		return;
 	list_add_tail(&p->fr.run_list, &rq->fr.active);
@@ -42,7 +42,7 @@ enqueue_task_freezer(struct rq *rq, struct task_struct *p, int flags)
 static void
 dequeue_task_freezer(struct rq *rq, struct task_struct *p, int flags)
 {
-	pr_info("dequeue task");
+	//pr_info("dequeue task");
 	if(!p->fr.on_rq)
 		return;
 
@@ -54,7 +54,7 @@ dequeue_task_freezer(struct rq *rq, struct task_struct *p, int flags)
 
 static void yield_task_freezer(struct rq *rq)
 {
-	pr_info("yield task");
+	//pr_info("yield task");
 	list_move_tail(&rq->curr->fr.run_list, &rq->fr.active);
 	update_curr_freezer(rq);
 }
@@ -63,7 +63,7 @@ static void
 check_preempt_curr_freezer(struct rq *rq, struct task_struct *p, int flags)
 {
 	//Don't need to reschedule since we dont deal with priority
-	pr_info("check preempt curr");
+	//pr_info("check preempt curr");
 }
 
 struct task_struct *pick_next_task_freezer(struct rq *rq)
@@ -71,7 +71,7 @@ struct task_struct *pick_next_task_freezer(struct rq *rq)
 	struct sched_freezer_entity *fr_se;
 	struct task_struct *p;
 	
-	pr_info("pick next task");
+	//pr_info("pick next task");
 	if (rq->fr.fr_nr_running == 0)
 		return NULL;
 
@@ -83,7 +83,9 @@ struct task_struct *pick_next_task_freezer(struct rq *rq)
 
 static void put_prev_task_freezer(struct rq *rq, struct task_struct *p)
 {
-	pr_info("put prev task");
+	//pr_info("put prev task");
+	if (!p->fr.on_rq)
+		return;
 	list_move_tail(&p->fr.run_list, &rq->fr.active);
 	update_curr_freezer(rq);
 }
@@ -91,7 +93,7 @@ static void put_prev_task_freezer(struct rq *rq, struct task_struct *p)
 static void
 set_next_task_freezer(struct rq *rq, struct task_struct *p, bool first)
 {
-	pr_info("set next task");
+	//pr_info("set next task");
 	list_move(&p->fr.run_list, &rq->fr.active);
 	p->se.exec_start = rq_clock_task(rq);
 }
@@ -100,7 +102,7 @@ set_next_task_freezer(struct rq *rq, struct task_struct *p, bool first)
 static int
 balance_freezer(struct rq *rq, struct task_struct *p, struct rq_flags *rf)
 {
-	pr_info("balance");
+	//pr_info("balance");
 	return sched_stop_runnable(rq) || sched_dl_runnable(rq) ||
 		sched_rt_runnable(rq) || rq->fr.fr_nr_running > 0;
 }
@@ -112,7 +114,7 @@ select_task_rq_freezer(struct task_struct *p, int cpu, int sd_flag, int flags)
 	int min_cpu = task_cpu(p);
 	int min = ((int)(~0U >> 1)); //MAX INT
 
-	pr_info("select task rq");
+	//pr_info("select task rq");
 
 	for_each_cpu(i, p->cpus_ptr) {
 		struct rq *rq = cpu_rq(i);
@@ -122,14 +124,14 @@ select_task_rq_freezer(struct task_struct *p, int cpu, int sd_flag, int flags)
 			min_cpu = i;
 		}
 	}
-	pr_info("Selected CPU %d", min_cpu);
+	//pr_info("Selected CPU %d", min_cpu);
 	return min_cpu;
 }
 #endif
 
 static void task_tick_freezer(struct rq *rq, struct task_struct *p, int queued)
 {
-	pr_info("task tick");
+	//pr_info("task tick");
 	update_curr_freezer(rq);
 
 	if (--p->fr.time_slice)
@@ -148,7 +150,7 @@ static void task_tick_freezer(struct rq *rq, struct task_struct *p, int queued)
 static void switched_from_freezer(struct rq *rq, struct task_struct *p)
 {
 	//No Op
-	pr_info("switched from");
+	//pr_info("switched from");
 }
 
 static void switched_to_freezer(struct rq *rq, struct task_struct *p)
@@ -156,22 +158,27 @@ static void switched_to_freezer(struct rq *rq, struct task_struct *p)
 	//check if task is on rq and not dl and not rt call resched
 	if (p->fr.on_rq && !task_has_dl_policy(p) && !task_has_rt_policy(p) && rq->curr != p)
 		resched_curr(rq);
-	pr_info("switched to");
+	//pr_info("switched to");
 }
 
 static void
 prio_changed_freezer(struct rq *rq, struct task_struct *p, int oldprio)
 {
 	//No Op?
-	pr_info("prio changed");
+	//pr_info("prio changed");
 }
 
 static unsigned int
 get_rr_interval_freezer(struct rq *rq, struct task_struct *task)
 {
-	pr_info("get rr interval");
+	//pr_info("get rr interval");
 	return FREEZER_TIMESLICE;
 }
+
+/*static void task_fork_freezer( struct task_struct *task)
+{
+	resched_curr(this_rq());
+}*/
 
 const struct sched_class freezer_sched_class
 	__section("__freezer_sched_class") = {
@@ -194,6 +201,7 @@ const struct sched_class freezer_sched_class
 	.set_cpus_allowed = set_cpus_allowed_common,
 #endif
 
+	//.task_fork = task_fork_freezer,
 	.task_tick = task_tick_freezer,
 	.switched_from = switched_from_freezer,
 	.switched_to = switched_to_freezer,

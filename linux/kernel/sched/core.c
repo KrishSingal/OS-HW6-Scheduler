@@ -3227,7 +3227,6 @@ int sched_fork(unsigned long clone_flags, struct task_struct *p)
 {
 	unsigned long flags;
 
-	pr_info("In sched fork");
 	__sched_fork(clone_flags, p);
 	/*
 	 * We mark the process as NEW here. This guarantees that
@@ -3247,7 +3246,7 @@ int sched_fork(unsigned long clone_flags, struct task_struct *p)
 	 * Revert to default priority/policy on fork if requested.
 	 */
 	if (unlikely(p->sched_reset_on_fork)) {
-		if (task_has_dl_policy(p) || task_has_rt_policy(p) || p->policy == SCHED_NORMAL /*check if policy normal*/) {
+		if (task_has_dl_policy(p) || task_has_rt_policy(p) || fair_policy(p->policy)) {
 			p->policy = SCHED_FREEZER;
 			p->static_prio = NICE_TO_PRIO(0);
 			p->rt_priority = 0;
@@ -3269,7 +3268,6 @@ int sched_fork(unsigned long clone_flags, struct task_struct *p)
 	else if (rt_prio(p->prio))
 		p->sched_class = &rt_sched_class;
 	else if(p->policy == SCHED_FREEZER) {
-		pr_info("Fork to freezer");
 		p->sched_class = &freezer_sched_class;
 	}
 	else
@@ -3284,22 +3282,17 @@ int sched_fork(unsigned long clone_flags, struct task_struct *p)
 	 *
 	 * Silence PROVE_RCU.
 	 */
-	pr_info("in spin lock");
 	raw_spin_lock_irqsave(&p->pi_lock, flags);
-	pr_info("Got spin lock");
 	rseq_migrate(p);
-	pr_info("After Migrate");
 	/*
 	 * We're setting the CPU for the first time, we don't migrate,
 	 * so use __set_task_cpu().
 	 */
 	__set_task_cpu(p, smp_processor_id());
-	pr_info("set cpu");
 	if (p->sched_class->task_fork)
 		p->sched_class->task_fork(p);
-		pr_info("in if");
+
 	raw_spin_unlock_irqrestore(&p->pi_lock, flags);
-	pr_info("unlock");
 	
 
 #ifdef CONFIG_SCHED_INFO
@@ -3313,7 +3306,6 @@ int sched_fork(unsigned long clone_flags, struct task_struct *p)
 #ifdef CONFIG_SMP
 	plist_node_init(&p->pushable_tasks, MAX_PRIO);
 	RB_CLEAR_NODE(&p->pushable_dl_tasks);
-	pr_info("end if ");
 #endif
 	return 0;
 }
@@ -4355,7 +4347,7 @@ pick_next_task(struct rq *rq, struct task_struct *prev, struct rq_flags *rf)
 	 * opportunity to pull in more work from other CPUs.
 	 */
 	//change so that it uses freezer instead comment out
-	if (likely(prev->sched_class <= &freezer_sched_class &&
+	/*if (likely(prev->sched_class <= &freezer_sched_class &&
 		   rq->nr_running == rq->fr.fr_nr_running)) {
 
 		p = pick_next_task_freezer(rq);
@@ -4369,7 +4361,7 @@ pick_next_task(struct rq *rq, struct task_struct *prev, struct rq_flags *rf)
 		}
 
 		return p;
-	}
+	}*/
 
 restart:
 	put_prev_task_balance(rq, prev, rf);
